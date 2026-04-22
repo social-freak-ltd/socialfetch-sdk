@@ -29,7 +29,8 @@ yarn add @socialfetch/sdk
 
 ## Requirements
 
-- **Node.js** `18+` (uses the built-in `fetch` unless you supply your own).
+- **Node.js** `18+` with a global `fetch` (the client also accepts a custom `fetch` implementation).
+- **ESM-only package**. Use `import` rather than `require()`.
 
 ## Quick start
 
@@ -94,7 +95,9 @@ const youtubeChannel = unwrap(
 
 ## Exported endpoint types
 
-The SDK also exports request and response types for supported endpoints, so consumers can reuse the official types instead of recreating mirror interfaces in their own code.
+The SDK exports request and response types for the current public methods, so consumers can reuse the official shapes directly from `@socialfetch/sdk` instead of recreating mirror interfaces in their own code.
+
+Common root exports include auth and billing responses such as `WhoamiResponse` and `BalanceResponse`, plus resource-specific aliases such as `InstagramProfileResponse`, `TikTokVideoCommentsResponse`, `TwitterProfileTweetsResponse`, `FacebookPostTranscriptResponse`, and `YouTubeVideoResponse`.
 
 For example, if you're working with Instagram profile routes you can import both the params and response types directly from `@socialfetch/sdk`:
 
@@ -113,11 +116,28 @@ function renderProfile(response: InstagramProfileResponse) {
 }
 ```
 
+Auth and billing responses are also available from the package root:
+
+```ts
+import type { BalanceResponse, WhoamiResponse } from "@socialfetch/sdk";
+
+function formatAccountSummary(
+	whoami: WhoamiResponse,
+	balance: BalanceResponse,
+) {
+	return {
+		userId: whoami.data.user.id,
+		remainingCredits: balance.data.balance,
+	};
+}
+```
+
 This applies across the SDK for other exported endpoint shapes too, including platform-specific request params, response payloads, and shared error/result types.
 
 Useful shared exports include:
 
 - `Result<T, E>` plus `ok()` / `err()` for Result-style control flow.
+- `ExtractResultValue<R>` and `ExtractResultError<R>` for deriving the success or error side from a result-returning SDK method.
 - `SocialFetchSdkError` for the normalized SDK error shape.
 - `PublicApiErrorCode` and `PUBLIC_API_ERROR_CODES` for working with stable API error codes.
 - `isSocialFetchSdkError` for narrowing unknown caught values.
@@ -146,6 +166,26 @@ async function loadInstagramProfile(
 ): Promise<Result<InstagramProfileResponse, SocialFetchSdkError>> {
 	return client.instagram.getProfile(params);
 }
+```
+
+### Result type extraction example
+
+If you want to derive types from SDK methods directly, use `ExtractResultValue<R>` and `ExtractResultError<R>`. They accept the method's `ReturnType` and handle the async `Promise<Result<...>>` shape for you:
+
+```ts
+import type {
+	ExtractResultError,
+	ExtractResultValue,
+	SocialFetchClient,
+} from "@socialfetch/sdk";
+
+export type SocialFetchTikTokVideoResponse = ExtractResultValue<
+	ReturnType<SocialFetchClient["tiktok"]["getVideo"]>
+>;
+
+export type SocialFetchTikTokVideoError = ExtractResultError<
+	ReturnType<SocialFetchClient["tiktok"]["getVideo"]>
+>;
 ```
 
 ### Error handling example
