@@ -9,9 +9,9 @@ Official TypeScript SDK for the [Social Fetch](https://www.socialfetch.dev) publ
 | Product | [socialfetch.dev](https://www.socialfetch.dev) |
 | Documentation | [socialfetch.dev/docs](https://www.socialfetch.dev/docs) |
 | Dashboard & API keys | [app.socialfetch.dev](https://app.socialfetch.dev) |
-| Source & issues | [github.com/social-freak-ltd/socialfetch](https://github.com/social-freak-ltd/socialfetch) (`packages/sdk`) |
+| Issues & support | [github.com/social-freak-ltd/socialfetch-sdk](https://github.com/social-freak-ltd/socialfetch-sdk) |
 
-For questions or problems with the API or this package, open an [issue](https://github.com/social-freak-ltd/socialfetch/issues) or contact [support@socialfetch.dev](mailto:support@socialfetch.dev).
+For questions or problems with the API or this package, open an [issue](https://github.com/social-freak-ltd/socialfetch-sdk/issues) or contact [support@socialfetch.dev](mailto:support@socialfetch.dev).
 
 ## Install
 
