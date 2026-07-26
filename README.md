@@ -1,3 +1,9 @@
+<p align="left">
+  <a href="https://www.socialfetch.dev">
+    <img src="https://raw.githubusercontent.com/social-freak-ltd/socialfetch-sdk/main/social-fetch.svg" alt="Social Fetch" width="240" />
+  </a>
+</p>
+
 # @socialfetch/sdk
 
 [![npm version](https://img.shields.io/npm/v/@socialfetch/sdk.svg)](https://www.npmjs.com/package/@socialfetch/sdk)
